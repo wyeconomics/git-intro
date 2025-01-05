@@ -1,0 +1,303 @@
+---
+title: "Introduction to Git / GitHub in Economics"
+author: "Wooyong Park"
+format: 
+  revealjs:
+    # theme: league
+    transition: slide
+    math:
+      engine: katex
+    title-slide-attributes:
+      data-background-image: images/main.jpg
+    fontsize: 16pt 
+    footer: "Applied Economic Methods Study Group"
+---
+
+# Why bother?
+
+## The best way to learn coding is to{#sec-first_slide}
+
+
+- <p style="font-size: 26px;">Choose the right first language. Python didn't work for me in the beginning.</p>
+- <p style="font-size: 26px;">Try a lot of [EDA](/#/sec-eda)(explanatory data analysis).</p>
+- <p style="font-size: 26px;">No need to hurry. You probably don't know what you don't know because you don't have to.</p>
+
+
+These slides cannot cover everything you can do with Git. We will only cover *version controls*, *collaboration*, and *GitHub pages*. But I did bring a gift in the last slide:)
+
+## What is Git?
+Git is a distributed version control system that tracks versions of files. It is often used to control source code by programmers who are developing software collaboratively.
+
+- Version Control
+- Backup
+- Collaboration
+
+<br>
+
+<img src="images/version_control_eg.png" width="200px" />
+
+## What is Git?
+Git is a distributed version control system that tracks versions of files. It is often used to control source code by programmers who are developing software collaboratively.
+
+- Version Control
+- Backup
+- Collaboration
+
+<br>
+
+::: {.fragment}
+### Examples in Economic Research
+
+- Development of an algorithm software[(example)](https://github.com/bcallaway11/did)
+- Large size labs with numbers of collaborators[(example)](https://github.com/orgs/gsbDBI/teams/all)
+- Posting codes for visibility[(example)](https://github.com/wyeconomics/econometrics2final)
+- Creating websites[(example)](https://wyeconomics.github.io/rkcho15th/) [(source code)](https://github.com/wyeconomics/rkcho15th)
+:::
+<br>
+
+::: {.fragment}
+### What is GitHub?
+Git creates a detailed history of your directory(folder). GitHub is where you post it, or where you download resources from.
+You can share your work or copy others' work.
+
+:::
+
+## Setting up
+
+### for Windows
+1. Go to [https://git-scm.com](https://git-scm.com).
+2. Click \[Download 2.xx.x for Windows\].
+3. Set all options to default.
+4. Open `Git Bash` in Windows toolbar.
+
+<br>
+
+### for Mac
+1. Go to [https://git-scm.com](https://git-scm.com).
+2. Click \[Download 2.xx.x for Mac\].
+3. Open the package and install Git. After installation, you can trash the installator package.
+4. Open terminal with `Cmd` + `spacebar`.
+
+If Git is properly installed, writing `git --version` in the terminal(shell) would display the following:
+
+```{bash}
+#| echo: true
+git --version
+```
+
+## Setting Up 
+1. Set your `user.name` and `user.email` to the ones you have in your GitHub account.
+
+```{bash}
+#| echo: true
+git config --global user.name "wyeconomics"
+git config --global user.email "tommypark822@naver.com"
+```
+
+Single(`-`) and double dash(`--`) stand for options. 
+
+<br>
+
+::: {.fragment}
+2. Check your current working directory with `pwd`, set it to `Desktop` if it isn't, and create a `practice` directory.
+```{bash}
+#| echo: true
+#| eval: false
+
+pwd
+cd Desktop
+mkdir practice
+```
+
+Usually a project directory would have multiple subdirectories including `codes`, `doc`, `data`, `figures`, and `temp`.
+
+**Tip)**  `cd ..` leads to the outer folder containing current working directory.
+:::
+
+<br>
+
+::: {.fragment}
+3. Once the main structure of a directory is made, initialize git with `git init`, and check it with `Cmd+Shift+.`
+
+```{bash}
+#| echo: true
+#| eval: false
+cd practice
+git init
+```
+:::: {.callout-tip title="Directory vs Repository"}
+These two are near identical in normal use. Locally, it is the folder of interest in a computer. However, repositories are directories with Git activated. Thus, folders in GitHub is mostly called a repo than a directory as it always entails Git.
+::::
+:::
+
+## Adding Files
+
+### `REAEME` file
+
+Most projects include `README` files to explain the content of the project and what's in the repo.
+```{bash}
+#| echo: true
+#| eval: false
+#| 
+vim README.txt
+```
+Write "This is a practice repo of Git", and close it with `Ctrl(Cmd) + X` and `enter`.
+
+
+## Adding Files
+### `html` output with Jupyter Notebook
+Let's create a `html` output with either Python(.ipynb) or R(.rmd). Save the `html` in the `doc` subdirectory.
+
+::: {.panel-tabset}
+
+#### Python
+
+```{python .code-overflow-scroll}
+#| echo: true
+#| output: true
+
+# Practice with the `penguins` dataset
+
+## Cell one : loading data
+import seaborn as sns
+import pandas as pd
+
+df = sns.load_dataset('penguins')
+df.head(3)
+
+
+## Cell two : processing data
+df = df.dropna(subset = ['sex', 'body_mass_g'], how = 'any', axis = 0)
+
+### Cell three : plotting figure
+import matplotlib.pyplot as plt
+
+fig = plt.figure(figsize = (9,5))
+ax1 = fig.add_subplot(1,2,1)
+ax2 = fig.add_subplot(1,2,2)
+df.plot(kind='scatter', x='flipper_length_mm', y='body_mass_g', c='coral', ax=ax1)
+sns.regplot(x='flipper_length_mm', y='body_mass_g', data=df, scatter_kws={"alpha": 0.5}, ax=ax2)
+plt.show()
+```
+
+#### R
+
+```{r}
+#| echo: true
+#| output: true
+
+# Load required libraries
+library(tidyverse)
+library(palmerpenguins)
+library(patchwork)
+
+# Cell one: Load dataset
+df <- penguins
+
+head(df, 3)
+
+# Cell two: Process data
+df <- df %>% filter(!is.na(sex), !is.na(body_mass_g))
+
+# Cell three: Plotting figure
+p1 <- ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(color = "coral") +
+  labs(title = "Scatter Plot")
+p2 <- ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm") +
+  labs(title = "Regression Plot")
+p1 + p2
+
+```
+
+:::
+
+## Git Workflow
+![Image from Dev Community](images/dev_comm.png)
+
+
+## Staging and Commiting
+
+```{bash}
+#| eval: false
+#| echo: true
+#| output: false
+git add . #to add a particular file, git add filename
+git commit -m "first commit"
+```
+
+Then, all the files are now recorded in part of your commitment history. Check `git log`.
+
+```{bash}
+#| eval: false
+#| echo: true
+#| output: false
+git log
+```
+
+Make any slight modification to the `README.txt` file, and let's check if git spots the difference.
+```{bash}
+#| eval: false
+#| echo: true
+#| output: false
+git diff README.txt
+```
+
+<br>
+
+**Tip)** Try to leave the staging area clean.
+
+## Restoring/Pushing
+
+## Publishing via GitHub Pages
+
+## Cloning a repo
+Let's practice cloning with with package repo of [Callaway and Sant'anna(2021)](https://www.sciencedirect.com/science/article/pii/S0304407620303948).
+
+```{bash}
+#| echo: true
+#| eval: false
+#| output: true
+git clone https://github.com/bcallaway11/did.git
+```
+
+Also add the cloned repo a remote name, so that pull/pushing to the original repo(in GitHub) can be modified.
+(It is impossible to push to the original repo without the author's permission, so just take it as an example.)
+
+```{bash}
+#| echo: true
+#| eval: false
+
+git remote add https://github.com/bcallaway11/did.git
+git remote -v
+```
+
+
+## Pulling
+
+## Brief Intro on Branches
+How to use branches is not covered in this presentation. Please refer to 
+
+
+
+## General Tips
+
+## Useful Resources
+
+## Example EDA{#sec-eda visibility="hidden"}
+
+
+```{r }
+#| echo: false
+
+library(tidyverse)
+ggplot(iris, aes(Petal.Length, Sepal.Length)) +
+  geom_point(aes(color = Species)) +
+  geom_smooth(method = 'lm') +
+  labs(title = 'Correlation Analysis of Iris Size')
+```
+
+
+
+[Return](/#/sec-frist_slide)

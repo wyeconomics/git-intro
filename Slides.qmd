@@ -386,7 +386,7 @@ Cloning is copying the entire repo. Pulling is fetching and merging a 'branch' o
 [Image Source](https://www.edrawmax.com/article/gitflow-diagram.html)
 
 
-### Related Codes
+### Related Commands
 ```{bash}
 #| eval: false
 #| echo: true

@@ -51,9 +51,9 @@ Git is a distributed version control system that tracks versions of files. It is
 ### Examples in Economic Research
 
 - Development of an algorithm software[(example)](https://github.com/bcallaway11/did)
-- Large size labs with numbers of collaborators[(example)](https://github.com/orgs/gsbDBI/teams/all)
+- Large size labs with numbers of collaborators
 - Posting codes for visibility[(example)](https://github.com/wyeconomics/econometrics2final)
-- Creating websites[(example)](https://wyeconomics.github.io/rkcho15th/) [(source code)](https://github.com/wyeconomics/rkcho15th)
+- Creating websites[(example)](https://wyeconomics.github.io) [(source code)](https://github.com/wyeconomics/wyeconomics.github.io)
 
 <br>
 

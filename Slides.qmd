@@ -1,5 +1,5 @@
 ---
-title: "Introduction to Git / GitHub in Economics"
+title: "Introduction to Git / GitHub in Economics I"
 author: "Wooyong Park"
 format: 
   revealjs:
@@ -11,7 +11,16 @@ format:
       data-background-image: images/main.jpg
     fontsize: 16pt 
     footer: "Applied Economic Methods Study Group"
+    embed-resources: true
 ---
+<style>
+pre code { 
+    font-size: 2em; 
+}
+code { 
+    font-size: 1em; 
+}
+</style>
 
 # Why bother?
 
@@ -37,30 +46,23 @@ Git is a distributed version control system that tracks versions of files. It is
 <img src="images/version_control_eg.png" width="200px" />
 
 ## What is Git?
-Git is a distributed version control system that tracks versions of files. It is often used to control source code by programmers who are developing software collaboratively.
 
-- Version Control
-- Backup
-- Collaboration
 
-<br>
-
-::: {.fragment}
 ### Examples in Economic Research
 
 - Development of an algorithm software[(example)](https://github.com/bcallaway11/did)
 - Large size labs with numbers of collaborators[(example)](https://github.com/orgs/gsbDBI/teams/all)
 - Posting codes for visibility[(example)](https://github.com/wyeconomics/econometrics2final)
 - Creating websites[(example)](https://wyeconomics.github.io/rkcho15th/) [(source code)](https://github.com/wyeconomics/rkcho15th)
-:::
+
 <br>
 
-::: {.fragment}
+
 ### What is GitHub?
 Git creates a detailed history of your directory(folder). GitHub is where you post it, or where you download resources from.
 You can share your work or copy others' work.
 
-:::
+
 
 ## Setting up
 
@@ -82,6 +84,7 @@ If Git is properly installed, writing `git --version` in the terminal(shell) wou
 
 ```{bash}
 #| echo: true
+#| style: "font-size: 0.6em"
 git --version
 ```
 
@@ -90,19 +93,21 @@ git --version
 
 ```{bash}
 #| echo: true
+#| style: "font-size: 0.6em"
 git config --global user.name "wyeconomics"
 git config --global user.email "tommypark822@naver.com"
 ```
 
 Single(`-`) and double dash(`--`) stand for options. 
 
-<br>
+<div style="margin-top: 0.5em;"></div>
 
 ::: {.fragment}
 2. Check your current working directory with `pwd`, set it to `Desktop` if it isn't, and create a `practice` directory.
 ```{bash}
 #| echo: true
 #| eval: false
+#| style: "font-size: 0.6em"
 
 pwd
 cd Desktop
@@ -113,8 +118,8 @@ Usually a project directory would have multiple subdirectories including `codes`
 
 **Tip)**  `cd ..` leads to the outer folder containing current working directory.
 :::
-
-<br>
+  
+<div style="margin-top: 0.5em;"></div>
 
 ::: {.fragment}
 3. Once the main structure of a directory is made, initialize git with `git init`, and check it with `Cmd+Shift+.`
@@ -125,7 +130,7 @@ Usually a project directory would have multiple subdirectories including `codes`
 cd practice
 git init
 ```
-:::: {.callout-tip title="Directory vs Repository"}
+:::: {.callout-tip title="Tipbox<br>Directory vs Repository"}
 These two are near identical in normal use. Locally, it is the folder of interest in a computer. However, repositories are directories with Git activated. Thus, folders in GitHub is mostly called a repo than a directory as it always entails Git.
 ::::
 :::
@@ -143,10 +148,14 @@ vim README.txt
 ```
 Write "This is a practice repo of Git", and close it with `Ctrl(Cmd) + X` and `enter`.
 
+:::: {.callout-tip title="Tipbox<br>Terminal vs Shell"}
+You might have come across these two words. Put simply, shell is a program that covers the core of the computer. In other words, it is a program, a translator between you and the computer, that touches the core functions of a computer. Shell could be incarnated in a Command Line Interface(CLI) or Graphical User Interface(GUI). But usually, when we say shell, it refers to CLIs. Terminal is the interface program where you can interact with the shell. You can consider it a imitated CLI on a GUI - or more accurately, a TUI. -  An eptiome og GUI is the Windows File Explorer.
+::::
+
 
 ## Adding Files
 ### `html` output with Jupyter Notebook
-Let's create a `html` output with either Python(.ipynb) or R(.rmd). Save the `html` in the `doc` subdirectory.
+Let's create a `html` output with either Python(.ipynb) or R(.rmd). Save it as `output.html` in the `doc` subdirectory.
 
 ::: {.panel-tabset}
 
@@ -155,7 +164,7 @@ Let's create a `html` output with either Python(.ipynb) or R(.rmd). Save the `ht
 ```{python .code-overflow-scroll}
 #| echo: true
 #| output: true
-
+#| style: "font-size: 0.6em"
 # Practice with the `penguins` dataset
 
 ## Cell one : loading data
@@ -185,21 +194,21 @@ plt.show()
 ```{r}
 #| echo: true
 #| output: true
-
-# Load required libraries
+#| style: "font-size: 0.6em"
+# Cell one: Load required libraries
 library(tidyverse)
 library(palmerpenguins)
 library(patchwork)
 
-# Cell one: Load dataset
+# Cell two: Load dataset
 df <- penguins
 
 head(df, 3)
 
-# Cell two: Process data
+# Cell three: Process data
 df <- df %>% filter(!is.na(sex), !is.na(body_mass_g))
 
-# Cell three: Plotting figure
+# Cell four: Plotting figure
 p1 <- ggplot(df, aes(x = flipper_length_mm, y = body_mass_g)) +
   geom_point(color = "coral") +
   labs(title = "Scatter Plot")
@@ -227,8 +236,8 @@ git add . #to add a particular file, git add filename
 git commit -m "first commit"
 ```
 
-Then, all the files are now recorded in part of your commitment history. Check `git log`.
-
+Then, all the files are now recorded in part of your commitment history. Check `git log`.\
+In `git log`, `hash` is the ID specific to a particular commit.
 ```{bash}
 #| eval: false
 #| echo: true
@@ -248,9 +257,75 @@ git diff README.txt
 
 **Tip)** Try to leave the staging area clean.
 
-## Restoring/Pushing
+## Checking History
+
+`git log` can include multiple options.
+```{bash}
+#| eval: false
+#| echo: true
+#| output: false
+
+git log -3 # restricts the number of commits to three (most recent)
+git log -3 README.txt # displays log of only README.txt
+git log --since='Month Day Year' # displays only the commits made after the specified date
+git log --since='M D Y' --until='M D Y' # displays only the commits made after and until the specified date
+```
+
+<br>
+
+## Undoing Changes
+- unstaging a file : `git reset HEAD` or `git reset HEAD file_name`
+
+:::: {.callout-tip title="Why call HEAD?"}
+You might wonder why we have to call HEAD when HEAD refers to the last commit. This is because unstaging a file actually means matching the staging area to the last commit. Technically, unstaging is not emptying the staging area, but matching the staging area to the last commit.
+::::
+
+- Undoing changes to an unstaged file : `git checkout .` or `git checkout -- file_name`
+- Reverting Commits : `git revert HEAD` or `git revert hash`
+
+:::: {.callout-tip title="What is Reverting?"}
+Sometimes, we commit files that contains an error, and then spot the issue. Naturally, we need a command of restoring a repo to the state before the previous commit and make a new commit with the previous version. This is what `git revert` does. Also, the `git revert` command opens a text editor in the shell to add a commit message. However, it is also a command that often generates conflict. **I do not recommend `git revert` unless reverting is inevitable. If the command sounds less intuitive, ignore it. Totally fine.**
+::::
+
+
+## Pushing a Repo{#sec-push}
+Let's push the repo and the html file we made to our GitHub account.
+
+1. Click `New` in the top-left banner.
+2. Fill the `Repository Name*` with the local repo name.
+3. Set options to `Public` and don't add a `README` file.
+4. Click `Create Repository`.
+
+<br>
+
+:::{.fragment}
+5. Go to `< > Code` in the left-top banner.
+6. Also click `< > Code` button in the right-top.
+7. Copy the `HTTPS` URL, which would say [https://github.com/username/practice.git].
+:::
+
+<br>
+
+:::{.fragment}
+8. Back to the terminal, write `git remote add origin https://github.com/username/practice.git`.
+9. Finally, write `git push -u origin main`. This means that we're pushing our local repo to the origin repo's main branch. **Git might require you to insert ID and password. For the password, please insert [PAT](/#/sec-pat).**
+10. Check the GitHub repo to see your local repo uploaded.
+:::
+
+## Pushing Cautions
+Pushing your local repo to a public repo means you share the items and history of your local repo. This requires a few cautions.
+
+1. Without inevitable reasons, don't include data to the `git push`, especially raw data. This is not only because it takes a lot of space, but most raw data are either publicly available or classified. You can lead the readers to the data website if it's public in the `README.md`. If the data is classified, you have a responsibility not to disclose it. To avoid such issues, you can include the raw data files into the `.gitignore` file and only commit and push selected files of a repo.
+
+2. Check if your codes include personal information. This could often happen if your code includes personal API keys. If you upload them, you'll get an email from GitHub that your information is exposed in most cases. However, avoiding is much easier than solving problems.
 
 ## Publishing via GitHub Pages
+
+1. Go to the `Settings` page of the repo in GitHub.
+2. In the left toc, you can find `Pages`. Click it.
+3. In the `Build and Deployment` setting, set the source to `Deploy from a branch` and Branch to `main` and `/(root)`.
+4. After you build it, go to `https://username.github.io/practice/doc/output.html`
+
 
 ## Cloning a repo
 Let's practice cloning with with package repo of [Callaway and Sant'anna(2021)](https://www.sciencedirect.com/science/article/pii/S0304407620303948).
@@ -269,26 +344,81 @@ Also add the cloned repo a remote name, so that pull/pushing to the original rep
 #| echo: true
 #| eval: false
 
-git remote add https://github.com/bcallaway11/did.git
+git remote add origin https://github.com/bcallaway11/did.git # adds the did package repo and alias it as origin
 git remote -v
 ```
 
 
 ## Pulling
-
-## Brief Intro on Branches
-How to use branches is not covered in this presentation. Please refer to 
+Having a cloned version of the `did` package, you can look into the repo in your local computer. However, the author might make changes to package. You can pull the changes via `git pull`.
 
 
+
+### Fetch + Merge
+
+- `git fetch remote_name`: fetches a Git remote with the specified name into the current local repo
+- `git fetch remote_name branch_name`: fetches a Git remote’s branch with the specified remote and branch name
+- `git merge remote_name branch_name`: merges the local repo to the remote’s branch with the specified remote and branch name
+
+### Pulling
+
+- `git pull remote_name branch_name`: fetches and merges the remote to the local
+
+```{bash}
+#| echo: true
+#| eval: false
+#| output: false
+
+cd did
+git pull origin master
+```
+
+::: {.fragment}
+:::: {.callout-tip title="Why not clone again?"}
+Cloning is copying the entire repo. Pulling is fetching and merging a 'branch' out of a remote repo. May be now is the right time to discuss branches.
+::::
+:::
+
+## Brief Intro to Branches
+:::: {.columns}
+:::{.column width="60%"}
+<img src="images/git-workflow.png" width="400px" />
+[Image Source](https://www.edrawmax.com/article/gitflow-diagram.html)
+
+
+### Related Codes
+```{bash}
+#| eval: false
+#| echo: true
+#| output: false
+#| style: "font-size: 0.6em"
+
+git branch #displays which branches exist in the repo(* denotes the current branch)
+git branch branch_name #creates a branch
+git branch -m old_name new_name #renames a branch
+git switch branch_name #moves to the branch
+git diff branch1 branch2 #displays diffs between branches
+git merge source_b destination_b #merges one branch to the other
+
+```
+:::
+
+:::{.column width="40%"}
+Branches enable you to isolate changes for specific features, bug fixes, or experiments without affecting the main codebase(usually the `main` or `master` branch). By creating branches, teams can work on multiple tasks concurrently, merging them back into the main branch once they are complete and tested. 
+
+One can think of the main branch as the **ground truth**. Each branch exists for a specific task, and once the task is complete and the process is confirmed to be ground true, it is then merged to the main branch.
+
+:::
+::::
 
 ## General Tips
 
 ## Useful Resources
 
-## Example EDA{#sec-eda visibility="hidden"}
+## Example EDA{#sec-eda}
 
 
-```{r }
+```{r}
 #| echo: false
 
 library(tidyverse)
@@ -298,6 +428,63 @@ ggplot(iris, aes(Petal.Length, Sepal.Length)) +
   labs(title = 'Correlation Analysis of Iris Size')
 ```
 
+[Return](/#/sec-first_slide)
+
+## Personal Access Tokens{#sec-pat}
+To check your Personal Access Token (PAT) in GitHub, follow these steps:
+
+If you cannot find or remember your PAT:
+
+1. You cannot view its value again.
+2.	You will need to generate a new PAT:
+3.	Follow the steps in “View Existing Personal Access Tokens” to navigate to the token list.
+4.	Revoke the old token if it’s no longer needed or compromised.
+5.	Click Generate new token to create a new one.
+	
 
 
-[Return](/#/sec-frist_slide)
+
+## Personal Access Tokens
+Verify PAT is Working.
+
+To check if a PAT is valid:
+
+1.	Use the token in a GitHub API call:
+
+```{bash}
+#| echo: true
+#| eval: false
+#| style: "font-size: 0.6em"
+
+curl -H "Authorization: token YOUR_PERSONAL_ACCESS_TOKEN" https://api.github.com/user
+```
+
+If valid, this returns details about your GitHub user.
+
+2.	Test with Git:
+- Clone a repository:
+
+```{bash}
+#| echo: true
+#| eval: false
+#| style: "font-size: 0.6em"
+
+
+git clone https://<username>@github.com/<username>/<repo>.git
+```
+
+- Use the token as the password when prompted.
+
+<br>
+
+Tips:
+
+- Store PAT Securely: Use credential managers, environment variables, or secret management tools to keep it safe.
+
+- Limit Scopes: Create tokens with the minimal necessary permissions to reduce risks.
+
+- Use Fine-Grained Tokens: These provide more granular permissions compared to classic tokens.
+	
+<div style="margin-top: 0.5em;"></div>
+
+[Return](/#/sec-push)

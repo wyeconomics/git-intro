@@ -1,0 +1,6 @@
+h2::before {
+  content: "";
+  display: block;
+  height: 10; /* Adjust this value for more space if needed */
+  margin-bottom: 5em; /* Space between the break and the heading */
+}

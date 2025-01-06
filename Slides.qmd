@@ -415,6 +415,17 @@ One can think of the main branch as the **ground truth**. Each branch exists for
 
 ## Useful Resources
 
+### Websites
+- <p style="font-size: 26px;">[Cheatsheet](/git_cheatsheet.html)</p>
+- <p style="font-size: 26px;">[Atlassian - Git Tutorial](https://www.atlassian.com/git)</p>
+- <p style="font-size: 26px;">[w3schools - Git Tutorial](https://www.w3schools.com/git/)</p>
+- <p style="font-size: 26px;">[DataCamp Course](https://app.datacamp.com/learn/skill-tracks/github-foundations)</p>
+
+### Books
+- <p style="font-size: 26px;">**Pro Git** by Ben Straub and Scott Chacon</p>
+
+
+
 ## Example EDA{#sec-eda}
 
 

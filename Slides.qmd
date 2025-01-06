@@ -412,6 +412,17 @@ One can think of the main branch as the **ground truth**. Each branch exists for
 ::::
 
 ## General Tips
+### General
+- Make codes and repo reproducible. Learn how to cleanly code.
+  - Remember that you tomorrow is a new reader of your codes.
+- Never forget to commit. Keep a consistent log of your work.
+- In a collaborative environment, notify your collaborators on what you commit to the `main` branch.
+
+### Cleanliness
+- Remember to delete idle branches. 
+- Don't `git add .` indiscrimminately and try to add files selectively.
+- Don't add unnecessary large files. Keep them in the `.gitignore`.
+
 
 ## Useful Resources
 

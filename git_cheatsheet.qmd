@@ -11,6 +11,7 @@ format:
     style: git_styles.css
   pdf: 
     toc: true
+    thanks: For the most recent version of this pdf, check out [this website](https://github.com/wyeconomics/git-intro/blob/main/git_cheatsheet.pdf)
     abstract: "Git/GitHub Tools for Research © 2025 by Wooyong Park is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/"
     number-sections: true
     colorlinks: true

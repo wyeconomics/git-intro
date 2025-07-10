@@ -43,7 +43,7 @@ Git is a distributed version control system that tracks versions of files. It is
 
 <br>
 
-<img src="images/version_control_eg.png" width="200px" />
+<img src="images/version_control_eg2.png" width="150px" />
 
 ## What is Git?
 
